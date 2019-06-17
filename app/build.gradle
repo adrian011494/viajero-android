@@ -99,4 +99,6 @@ dependencies {
 
     // If you want to use Kotlin syntax with Android Lifecycle
     implementation 'com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:2.2.1'
+
+    implementation 'com.karumi:dexter:5.0.0'
 }

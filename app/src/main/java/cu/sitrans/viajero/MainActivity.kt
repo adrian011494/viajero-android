@@ -1,12 +1,13 @@
 package cu.sitrans.viajero
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import cu.sitrans.viajero.ui.base.AbstractActivity
+import dagger.android.AndroidInjection
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AbstractActivity() {
+    override fun layout(): Int = R.layout.activity_main
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun inject() {
+        AndroidInjection.inject(this)
     }
+
 }
