@@ -1,18 +1,27 @@
 package cu.sitrans.viajero.di.module
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import cu.sitrans.viajero.ui.base.Trip.TripListViewModel
+import cu.sitrans.viajero.ui.base.origin.OriginViewModel
 import cu.sitrans.viajero.viewmodel.ViewModelFactory
 import dagger.Binds
 import dagger.Module
+import dagger.multibindings.IntoMap
 import javax.inject.Singleton
 
 @Module
 abstract class ViewModelModule {
 
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(InitializeProfileViewModel::class)
-//    abstract fun bindInitializeProfileViewModel(initializeProfileViewModel: InitializeProfileViewModel): ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(OriginViewModel::class)
+    abstract fun bindOriginViewModel(originViewModel: OriginViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TripListViewModel::class)
+    abstract fun bindTripListViewModel(tripListViewModel: TripListViewModel): ViewModel
 
     @Binds
     @Singleton
