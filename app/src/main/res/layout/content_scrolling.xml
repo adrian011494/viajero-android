@@ -32,50 +32,63 @@
                           android:orientation="vertical"
             >
 
-
-                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                        android:id="@+id/origin"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_location"
-                        android:hint="@string/origen"
-                        app:met_floatingLabel="normal"
-                        app:fontFamily="@font/roboto_regular"
-                        android:textSize="12sp"
-                        android:enabled="false"
-                        android:focusable="false"
-                        android:clickable="false"
-                        android:drawableStart="@drawable/ic_location"/>
-
-                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                        android:id="@+id/destiny"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_location"
-                        android:hint="@string/destiny"
-                        app:met_floatingLabel="normal"
-                        android:drawableStart="@drawable/ic_location"
+                <com.google.android.material.textfield.TextInputLayout
                         android:layout_marginTop="16dp"
-                        app:fontFamily="@font/roboto_regular"
-                       android:enabled="false"
-                        android:focusable="false"
-                        android:clickable="false"
-                        android:textSize="12sp"
-                />
-
-                <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
-                        android:id="@+id/selectDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_calendar"
-                        android:drawableLeft="@drawable/ic_calendar"
-                        android:drawablePadding="4dp"
-                        app:fontFamily="@font/roboto_regular"
-                        android:textSize="12sp"
+                        android:hint="@string/origen">
+
+
+                    <jrizani.jrspinner.JRSpinner
+                            android:id="@+id/origin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:jrs_title="@string/origen"
+                            app:fontFamily="@font/roboto_regular"
+                            android:textSize="12sp"
+                            app:jrs_icon_tint="@color/colorPrimary"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
                         android:layout_marginTop="16dp"
-                        android:editable="false"
-                        android:hint="10/2/2019"
-                />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/destiny">
+
+
+                    <jrizani.jrspinner.JRSpinner
+                            android:id="@+id/destiny"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:jrs_title="@string/destiny"
+                            app:fontFamily="@font/roboto_regular"
+                            android:textSize="12sp"
+                            app:jrs_icon_tint="@color/colorPrimary"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/selectDateInput"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/fecha">
+
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/selectDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="4dp"
+                            app:fontFamily="@font/roboto_regular"
+                            android:textSize="12sp"
+                            android:layout_marginTop="16dp"
+                            android:editable="false"
+                    />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
 
@@ -95,6 +108,7 @@
                 android:textAllCaps="false"
                 android:text="@string/buscar"
                 android:layout_marginTop="24dp"
+                android:enabled="false"
         />
     </LinearLayout>
 

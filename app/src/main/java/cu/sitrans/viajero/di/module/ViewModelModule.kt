@@ -2,7 +2,7 @@ package cu.sitrans.viajero.di.module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import cu.sitrans.viajero.ui.base.Trip.TripListViewModel
+import cu.sitrans.viajero.ui.base.trip.TripListViewModel
 import cu.sitrans.viajero.ui.base.origin.OriginViewModel
 import cu.sitrans.viajero.viewmodel.ViewModelFactory
 import dagger.Binds

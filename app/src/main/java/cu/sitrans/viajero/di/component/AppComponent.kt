@@ -4,6 +4,7 @@ import android.app.Application
 import cu.sitrans.viajero.App
 import cu.sitrans.viajero.di.module.AppModule
 import cu.sitrans.viajero.di.module.MainActivityModule
+import cu.sitrans.viajero.di.module.RestModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -13,6 +14,7 @@ import javax.inject.Singleton
 @Component(
     modules = [
         (AppModule::class),
+        (RestModule::class),
         (AndroidInjectionModule::class)
 
         , (MainActivityModule::class)

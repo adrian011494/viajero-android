@@ -22,7 +22,7 @@ class Preferences @Inject constructor(app: Application) {
 
 
     fun getAuthToken(): String {
-        return sharedPreferences.getString(ACCESS_TOKEN, "") ?: ""
+        return sharedPreferences.getString(ACCESS_TOKEN, "2baae38c-3990-3dd9-aca6-3d3f8ea0a524") ?: ""
     }
 
     fun setAuthToken(token:String) {

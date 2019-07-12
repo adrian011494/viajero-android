@@ -1,18 +1,19 @@
-package cu.sitrans.viajero.ui.base.origin
+package cu.sitrans.viajero.ui.base.trip
 
 import cu.sitrans.viajero.mvi.MviViewState
 import cu.sitrans.viajero.repository.model.Localidad
+import cu.sitrans.viajero.repository.model.Viaje
 
-data class OriginViewState(
+data class TripViewState(
     val isLoading: Boolean = true,
     val error: Throwable? = null,
-    val localidades: List<Localidad> = listOf()
+    val viajes: List<Viaje> = listOf()
 ) : MviViewState {
 
 
     companion object {
-        fun idle(): OriginViewState {
-            return OriginViewState()
+        fun idle(): TripViewState {
+            return TripViewState()
         }
     }
 }

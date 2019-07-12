@@ -10,7 +10,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "cu.sitrans.viajero"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -105,4 +105,9 @@ dependencies {
     implementation 'com.karumi:dexter:5.0.0'
 
     implementation 'com.weiwangcn.betterspinner:library-material:1.1.0'
+
+    //date
+    implementation 'com.github.Kunzisoft:Android-SwitchDateTimePicker:2.0'
+
+    implementation 'com.github.jrizani:JRSpinner:androidx-SNAPSHOT'
 }
