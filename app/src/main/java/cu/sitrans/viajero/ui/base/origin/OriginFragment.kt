@@ -18,10 +18,21 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.content_scrolling.*
+import kotlinx.android.synthetic.main.content_scrolling.destiny
+import kotlinx.android.synthetic.main.content_scrolling.origin
+import kotlinx.android.synthetic.main.routes_fragment.*
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import android.widget.Toast
+import cu.sitrans.viajero.MainActivity
+import cu.sitrans.viajero.repository.model.Contacto
+import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat
+import ir.mirrajabi.searchdialog.core.SearchResultListener
+import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat
+import kotlin.collections.ArrayList
+
 
 class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState> {
 
@@ -76,7 +87,20 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
                 selectDate.callOnClick()
         }
 
+        setHasOptionsMenu(true)
+        toolbar.inflateMenu(R.menu.menu_home)
+        toolbar.setOnMenuItemClickListener {
+
+            showAgencias()
+            return@setOnMenuItemClickListener true
+        }
     }
+
+
+    private fun showAgencias() {
+        agenciasIntentPublisher.onNext(OriginIntent.AgenciasIntent)
+    }
+
 
     private fun selectTripDate() {
         val dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
@@ -151,7 +175,8 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
     override fun intents(): Observable<OriginIntent> {
         return Observable.merge(
             initialIntent(),
-            refreshIntentPublisher
+            refreshIntentPublisher,
+            agenciasIntentPublisher
         )
 
     }
@@ -161,15 +186,18 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
     }
 
     private val refreshIntentPublisher = PublishSubject.create<OriginIntent.RefreshIntent>()
+    private val agenciasIntentPublisher = PublishSubject.create<OriginIntent.AgenciasIntent>()
 
 
-    private val loadingDialog by lazy { ProgressDialog(requireContext()) }
+    private var loadingDialog:ProgressDialog? = null
     override fun render(state: OriginViewState) {
 
-        if (state.isLoading)
-            loadingDialog.show()
+        if (state.isLoading) {
+            loadingDialog = ProgressDialog(requireContext())
+            loadingDialog?.show()
+        }
         else
-            loadingDialog.hide()
+            loadingDialog?.hide()
 
         Timber.w(state.localidades.toString())
         Timber.e(state.error)
@@ -190,6 +218,28 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         } else {
             origin.isEnabled = false
             destiny.isEnabled = false
+        }
+
+        if (state.agencias.isNotEmpty()) {
+            SimpleSearchDialogCompat(
+                requireContext(), getString(R.string.agencias),
+                getString(R.string.search), null, ArrayList(state.agencias), object : SearchResultListener<Contacto> {
+                    override fun onSelected(dialog: BaseSearchDialogCompat<*>?, item: Contacto?, position: Int) {
+                        AlertDialog.Builder(requireContext())
+                            .setTitle(item?.title)
+                            .setMessage("Dir: ${item?.direccion ?: ""}\nTel: ${item?.telefono ?: ""}")
+                            .create().show()
+
+
+                    }
+
+                }
+            ).show()
+        }
+
+
+        if (state.error != null) {
+            Toast.makeText(requireContext(), getString(R.string.net_error), Toast.LENGTH_SHORT).show()
         }
 
     }

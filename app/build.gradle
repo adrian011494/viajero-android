@@ -110,4 +110,7 @@ dependencies {
     implementation 'com.github.Kunzisoft:Android-SwitchDateTimePicker:2.0'
 
     implementation 'com.github.jrizani:JRSpinner:androidx-SNAPSHOT'
+
+    implementation 'com.github.mirrajabi:search-dialog:1.2.3'
+
 }

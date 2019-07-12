@@ -12,6 +12,12 @@ class SitransService @Inject constructor(val api: SitransAuthApi) {
         }
 
 
+    fun agencias() = api.agencias()
+        .map {
+            it.Agencias.contacto
+        }
+
+
     fun trips(origin: String, destiny: String, date: String) = api.trips(
         origin, destiny, date
     ).map {

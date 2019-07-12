@@ -71,6 +71,7 @@ class OriginViewModel @Inject constructor(val processorHolder: OriginActionProce
     private fun actionFromIntent(intent: OriginIntent): OriginAction {
         return when (intent) {
             is OriginIntent.InitialIntent, is OriginIntent.RefreshIntent -> OriginAction.LoadPlacesList
+            is OriginIntent.AgenciasIntent -> OriginAction.LoadAgenciasList
         }
     }
 
@@ -107,6 +108,23 @@ class OriginViewModel @Inject constructor(val processorHolder: OriginActionProce
                         error = result.error
                     )
                     is OriginResult.LoadPlacesResult.InFlight -> previousState.copy(isLoading = true)
+
+                }
+                is OriginResult.LoadAgenciasResult -> when (result) {
+
+                    is OriginResult.LoadAgenciasResult.Success -> {
+
+                        previousState.copy(
+                            isLoading = false, error = null,
+                            agencias = result.agencias
+                        )
+                    }
+
+                    is OriginResult.LoadAgenciasResult.Failure -> previousState.copy(
+                        isLoading = false,
+                        error = result.error
+                    )
+                    is OriginResult.LoadAgenciasResult.InFlight -> previousState.copy(isLoading = true)
 
                 }
 

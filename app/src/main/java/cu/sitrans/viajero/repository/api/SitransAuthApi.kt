@@ -1,5 +1,6 @@
 package cu.sitrans.viajero.repository.api
 
+import cu.sitrans.viajero.repository.model.responce.AgenciasResponce
 import cu.sitrans.viajero.repository.model.responce.LocalidadesResponce
 import cu.sitrans.viajero.repository.model.responce.TripsResponce
 import io.reactivex.Single
@@ -11,6 +12,10 @@ interface SitransAuthApi {
 
     @GET("disponibilidad/1.0/localidades")
     fun localidades(): Single<LocalidadesResponce>
+
+
+    @GET("disponibilidad/1.0/agencias")
+    fun agencias(): Single<AgenciasResponce>
 
 
     @GET("disponibilidad/1.0/disponibilidad")

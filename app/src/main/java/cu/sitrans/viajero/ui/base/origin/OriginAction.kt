@@ -6,5 +6,6 @@ import cu.sitrans.viajero.mvi.MviAction
 sealed class OriginAction : MviAction {
 
     object LoadPlacesList : OriginAction()
+    object LoadAgenciasList : OriginAction()
 
 }

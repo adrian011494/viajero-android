@@ -17,23 +17,45 @@ class OriginActionProcessorHolder @Inject constructor(val sitransService: Sitran
         get() = ObservableTransformer { actions ->
             actions.publish { shared ->
 
+                Observable.merge(
+                    shared.ofType(OriginAction.LoadAgenciasList::class.java).compose(agenciasProcessor),
+                    shared.ofType(OriginAction.LoadPlacesList::class.java).compose(placesProcessor)
+                        .mergeWith(
+                            shared.filter { v ->
+                                v !is OriginAction.LoadPlacesList
+                                        && v !is OriginAction.LoadAgenciasList
 
-                shared.ofType(OriginAction.LoadPlacesList::class.java).compose(placesProcessor)
-                    .mergeWith(
-                        shared.filter { v ->
-                            v !is OriginAction.LoadPlacesList
-
-                        }.flatMap { w ->
-                            Observable.error<OriginResult>(
-                                IllegalArgumentException("Unknown Action type: $w")
-                            )
-                        }
-                    )
+                            }.flatMap { w ->
+                                Observable.error<OriginResult>(
+                                    IllegalArgumentException("Unknown Action type: $w")
+                                )
+                            }
+                        )
+                )
 
 
             }
         }
 
+
+    private val agenciasProcessor =
+        ObservableTransformer<OriginAction.LoadAgenciasList, OriginResult> { actions ->
+            actions.flatMap { action ->
+
+                sitransService.agencias()
+                    .map {
+                        OriginResult.LoadAgenciasResult.Success(it)
+                    }
+                    .toObservable()
+                    .cast(OriginResult.LoadAgenciasResult::class.java)
+                    // Wrap any error into an immutable object and pass it down the stream
+                    // without crashing.
+                    // Because errors are data and hence, should just be part of the stream.
+                    .onErrorReturn(OriginResult.LoadAgenciasResult::Failure)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+            }
+        }
 
     private val placesProcessor =
         ObservableTransformer<OriginAction.LoadPlacesList, OriginResult> { actions ->

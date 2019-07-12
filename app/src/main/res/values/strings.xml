@@ -15,4 +15,7 @@
     <string name="fecha">Fecha</string>
     <string name="climatizado">Climatizado</string>
     <string name="capacidad">Capacidad: %s </string>
+    <string name="agencias">Agencias</string>
+    <string name="search">Buscar...</string>
+    <string name="net_error">Ha ocurrido un error. Verifique su conexión de datos.</string>
 </resources>
