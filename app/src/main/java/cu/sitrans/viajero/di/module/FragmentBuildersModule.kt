@@ -1,5 +1,6 @@
 package cu.sitrans.viajero.di.module
 
+import cu.sitrans.viajero.ui.info.InfoFragment
 import cu.sitrans.viajero.ui.trip.TripListFragment
 import cu.sitrans.viajero.ui.origin.OriginFragment
 import dagger.Module
@@ -13,5 +14,8 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeTripListFragment(): TripListFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeInfoFragment(): InfoFragment
 
 }

@@ -31,6 +31,7 @@ import java.util.*
 import javax.inject.Inject
 import android.widget.Toast
 import cu.sitrans.viajero.repository.model.Contacto
+import cu.sitrans.viajero.ui.info.InfoFragment
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat
 import ir.mirrajabi.searchdialog.core.SearchResultListener
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat
@@ -115,9 +116,19 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         toolbar.inflateMenu(R.menu.menu_home)
         toolbar.setOnMenuItemClickListener {
 
-            showAgencias()
+            if (it.itemId == R.id.action_agencias)
+                showAgencias()
+            else
+                showInfoView()
             return@setOnMenuItemClickListener true
         }
+    }
+
+    private fun showInfoView() {
+
+
+        start(InfoFragment.newInstance())
+
     }
 
 
