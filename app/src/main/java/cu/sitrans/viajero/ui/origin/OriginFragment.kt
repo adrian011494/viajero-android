@@ -2,7 +2,12 @@ package cu.sitrans.viajero.ui.origin
 
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.text.SpannableString
 import android.text.format.DateFormat
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment
 
@@ -53,8 +58,8 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = viewModelFactory.create(OriginViewModel::class.java)
 
         actionSearch.setOnClickListener {
@@ -203,8 +208,6 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
     override fun onPause() {
         super.onPause()
         disposables.clear()
-
-
     }
 
     override fun intents(): Observable<OriginIntent> {
@@ -229,6 +232,9 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
 
         if (state.isLoading) {
             loadingDialog = ProgressDialog(requireContext())
+                .apply {
+                    setCancelable(false)
+                }
             loadingDialog?.show()
         } else
             loadingDialog?.hide()
@@ -259,10 +265,22 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
                 requireContext(), getString(R.string.agencias),
                 getString(R.string.search), null, ArrayList(state.agencias), object : SearchResultListener<Contacto> {
                     override fun onSelected(dialog: BaseSearchDialogCompat<*>?, item: Contacto?, position: Int) {
+                        val s = SpannableString("Dir: ${item?.direccion ?: "-"}\nTel: ${item?.telefono ?: "-"}")
+                        Linkify.addLinks(s, Linkify.ALL)
+
                         AlertDialog.Builder(requireContext())
                             .setTitle(item?.title)
-                            .setMessage("Dir: ${item?.direccion ?: ""}\nTel: ${item?.telefono ?: ""}")
-                            .create().show()
+                            .setMessage(s)
+                            .setPositiveButton(android.R.string.ok, null)
+                            .create()
+                            .apply {
+                                setOnShowListener {
+
+                                    this.findViewById<TextView>(android.R.id.message)?.movementMethod =
+                                        LinkMovementMethod.getInstance()
+                                }
+                            }
+                            .show()
 
 
                     }

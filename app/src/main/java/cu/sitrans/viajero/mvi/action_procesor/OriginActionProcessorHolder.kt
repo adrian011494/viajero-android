@@ -39,7 +39,7 @@ class OriginActionProcessorHolder @Inject constructor(val sitransService: Sitran
 
 
     private val agenciasProcessor =
-        ObservableTransformer<OriginAction.LoadAgenciasList, OriginResult> { actions ->
+        ObservableTransformer<OriginAction.LoadAgenciasList, OriginResult.LoadAgenciasResult> { actions ->
             actions.flatMap { action ->
 
                 sitransService.agencias()
@@ -54,6 +54,7 @@ class OriginActionProcessorHolder @Inject constructor(val sitransService: Sitran
                     .onErrorReturn(OriginResult.LoadAgenciasResult::Failure)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .startWith(OriginResult.LoadAgenciasResult.InFlight)
             }
         }
 
@@ -73,6 +74,7 @@ class OriginActionProcessorHolder @Inject constructor(val sitransService: Sitran
                     .onErrorReturn(OriginResult.LoadPlacesResult::Failure)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .startWith(OriginResult.LoadPlacesResult.InFlight)
             }
         }
 }

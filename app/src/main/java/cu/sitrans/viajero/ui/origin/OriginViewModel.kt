@@ -100,14 +100,16 @@ class OriginViewModel @Inject constructor(val processorHolder: OriginActionProce
                         previousState.copy(
                             isLoading = false, error = null,
                             localidades = result.places
+                            , agencias = listOf()
                         )
                     }
 
                     is OriginResult.LoadPlacesResult.Failure -> previousState.copy(
                         isLoading = false,
                         error = result.error
+                        , agencias = listOf()
                     )
-                    is OriginResult.LoadPlacesResult.InFlight -> previousState.copy(isLoading = true)
+                    is OriginResult.LoadPlacesResult.InFlight -> previousState.copy(isLoading = true, agencias = listOf())
 
                 }
                 is OriginResult.LoadAgenciasResult -> when (result) {
@@ -123,8 +125,12 @@ class OriginViewModel @Inject constructor(val processorHolder: OriginActionProce
                     is OriginResult.LoadAgenciasResult.Failure -> previousState.copy(
                         isLoading = false,
                         error = result.error
+                        , agencias = listOf()
                     )
-                    is OriginResult.LoadAgenciasResult.InFlight -> previousState.copy(isLoading = true)
+                    is OriginResult.LoadAgenciasResult.InFlight -> previousState.copy(
+                        isLoading = true,
+                        agencias = listOf()
+                    )
 
                 }
 
