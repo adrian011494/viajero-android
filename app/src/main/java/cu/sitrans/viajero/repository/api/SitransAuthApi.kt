@@ -19,7 +19,14 @@ interface SitransAuthApi {
 
 
     @GET("disponibilidad/1.0/disponibilidad")
-    fun trips(@Query("origen") origen: String, @Query("destino") destino: String, @Query("fecha_ini") fecha_ini: String): Single<TripsResponce>
+    fun trips(
+        @Query("origen") origen: String, @Query("destino") destino: String, @Query("fecha_ini") fecha_ini: String
+        , @Query("fecha_fin") fecha_fin: String
+    ): Single<TripsResponce>
+
+    @GET("disponibilidad/1.0/disponibilidad")
+
+    fun tripsOnlyIda(@Query("origen") origen: String, @Query("destino") destino: String, @Query("fecha_ini") fecha_ini: String): Single<TripsResponce>
 
 
 }

@@ -8,6 +8,6 @@ data class Viaje(
     val fecha_llegada: String?,
     val medio: String?,
     val precio: String?,
-    val tipo: String?,
+    var tipo: String?,
     val via: String?
 )

@@ -18,7 +18,13 @@ class SitransService @Inject constructor(val api: SitransAuthApi) {
         }
 
 
-    fun trips(origin: String, destiny: String, date: String) = api.trips(
+    fun trips(origin: String, destiny: String, date: String, dateBack: String?) = api.trips(
+        origin, destiny, date, dateBack ?: ""
+    ).map {
+        it.disponibilidad.viaje
+    }
+
+    fun tripsOnlyIda(origin: String, destiny: String, date: String) = api.tripsOnlyIda(
         origin, destiny, date
     ).map {
         it.disponibilidad.viaje

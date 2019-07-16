@@ -39,7 +39,16 @@ class TripActionProcessorHolder @Inject constructor(val sitransService: SitransS
         ObservableTransformer<TripAction.LoadPlacesList, TripResult> { actions ->
             actions.flatMap { action ->
 
-                sitransService.trips(action.origin, action.destiny, action.date)
+                sitransService.trips(action.origin, action.destiny, action.date, action.dateBack)
+
+                    .concatWith(sitransService.tripsOnlyIda(action.destiny, action.origin, action.dateBack).map {
+                        it.map {
+                            it.tipo = "Regreso"
+                            it
+                        }
+                    })
+
+
                     .map {
                         TripResult.LoadPlacesResult.Success(it)
                     }

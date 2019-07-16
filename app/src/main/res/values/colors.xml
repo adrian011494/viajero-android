@@ -7,5 +7,6 @@
     <color name="descText">#4A4A4A</color>
 
     <color name="colorAccent_disable">#447C4DFF</color>
+    <color name="red">#FF5252</color>
 
 </resources>

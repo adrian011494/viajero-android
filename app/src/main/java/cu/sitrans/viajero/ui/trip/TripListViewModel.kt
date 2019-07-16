@@ -68,8 +68,8 @@ class TripListViewModel @Inject constructor(val processorHolder: TripActionProce
      */
     private fun actionFromIntent(intent: TripIntent): TripAction {
         return when (intent) {
-            is TripIntent.InitialIntent -> TripAction.LoadPlacesList(intent.origin, intent.destiny, intent.date)
-            else -> TripAction.LoadPlacesList("", "", "")
+            is TripIntent.InitialIntent -> TripAction.LoadPlacesList(intent.origin, intent.destiny, intent.date, intent.dateBack)
+            else -> TripAction.LoadPlacesList("", "", "", "")
         }
     }
 

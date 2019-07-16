@@ -67,7 +67,7 @@
                             android:textColor="@android:color/white"
                             android:gravity="center"
                             android:layout_gravity="center"
-                            android:text="Santa Clara"/>
+                            tools:text="Santa Clara"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
@@ -88,21 +88,71 @@
                             android:textSize="24sp"
                             android:textStyle="bold"
                             android:textColor="@android:color/white"
-                            android:text="Habana"/>
+                            tools:text="Habana"/>
 
 
                 </LinearLayout>
 
 
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tripDate"
-                        android:layout_width="wrap_content"
+                <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:fontFamily="@font/roboto_light"
-                        android:textSize="12sp"
-                        android:textColor="@android:color/white"
-                        android:text="12th - Sep - 2019 | Monday"/>
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                >
 
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/tripIda"
+                            android:layout_width="16dp"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_arrow_forward_black_24dp"
+                            android:layout_marginEnd="4dp"
+                    />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tripDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:fontFamily="@font/roboto_light"
+                            android:textSize="12sp"
+                            android:textColor="@android:color/white"
+                            tools:text="12th - Sep - 2019 | Monday"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:id="@+id/tripDateBackLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:visibility="gone"
+                >
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/tripBack"
+                            android:layout_width="16dp"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_arrow_forward_black_24dp"
+                            android:layout_marginEnd="4dp"
+                            android:rotation="180"
+                            android:visibility="visible"
+                    />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tripDateBack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:fontFamily="@font/roboto_light"
+                            android:textSize="12sp"
+                            android:textColor="@android:color/white"
+                            tools:text="12th - Sep - 2019 | Monday"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 

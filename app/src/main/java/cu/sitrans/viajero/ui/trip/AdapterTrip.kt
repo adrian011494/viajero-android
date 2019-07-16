@@ -27,7 +27,13 @@ class AdapterTrip(val itemList: List<Viaje>) : RecyclerView.Adapter<AdapterTrip.
     class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(get: Viaje) {
-            itemView.desc.text = get.denominacion
+            itemView.title.text = get.denominacion
+            if (get.via.isNullOrBlank())
+                itemView.desc.visibility = View.GONE
+            else {
+                itemView.desc.visibility = View.VISIBLE
+                itemView.desc.text = itemView.context.getString(R.string.via, get.via ?: "")
+            }
             itemView.price.text = (get.precio?.toDoubleOrNull()?.toInt() ?: 0).toString() + " $"
 
             try {
@@ -53,11 +59,19 @@ class AdapterTrip(val itemList: List<Viaje>) : RecyclerView.Adapter<AdapterTrip.
 
             itemView.duration.text = itemView.context.getString(R.string.capacidad, get.capac ?: "0")
 
-//            if (get.clima != null && get.clima == "true") {
-//                itemView.duration.text = itemView.context.getString(R.string.climatizado)
-//            } else
-//                itemView.duration.text = ""
+            if (get.clima != null && get.clima == "true") {
+                itemView.clima.visibility = View.VISIBLE
+            } else
+                itemView.clima.visibility = View.GONE
 
+
+            if (get.tipo == null || get.tipo == "Ida") {
+                itemView.tripIda.visibility = View.VISIBLE
+                itemView.tripBack.visibility = View.GONE
+            } else {
+                itemView.tripIda.visibility = View.GONE
+                itemView.tripBack.visibility = View.VISIBLE
+            }
 
         }
 

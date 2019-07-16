@@ -26,8 +26,9 @@ import javax.inject.Inject
 class TripListFragment : AbstractFragment(), MviView<TripIntent, TripViewState> {
 
 
-    private var currentTripList: List<Viaje> = listOf()
+    private var currentTripList: MutableList<Viaje> = mutableListOf()
     private val loadingDialog by lazy { ProgressDialog(requireContext()) }
+
     override fun render(state: TripViewState) {
         if (state.isLoading)
             loadingDialog.show()
@@ -37,7 +38,9 @@ class TripListFragment : AbstractFragment(), MviView<TripIntent, TripViewState> 
         Timber.d(state.toString())
 
 
-        currentTripList = state.viajes
+        currentTripList.addAll(state.viajes)
+
+        currentTripList = currentTripList.distinct().toMutableList()
 
         when (tabs.selectedTabPosition) {
             0 -> {
@@ -134,6 +137,13 @@ class TripListFragment : AbstractFragment(), MviView<TripIntent, TripViewState> 
             .format(getSelectedDate())
 
 
+        if (getSelectedDateBack().time > Date(-1).time) {
+            tripDateBackLayout.visibility = View.VISIBLE
+            tripDateBack.text = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
+                .format(getSelectedDateBack())
+        }
+
+
         list.layoutManager = LinearLayoutManager(requireContext())
 
     }
@@ -195,6 +205,8 @@ class TripListFragment : AbstractFragment(), MviView<TripIntent, TripViewState> 
             TripIntent.InitialIntent(
                 getOrigin().Clave, getDestiny().Clave, SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                     .format(getSelectedDate())
+                , SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    .format(getSelectedDateBack())
             )
         )
     }
