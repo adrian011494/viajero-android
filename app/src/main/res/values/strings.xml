@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Viajero</string>
+    <string name="app_name">Viajando</string>
     <string name="hola">Hola!</string>
     <string name="a_donde_quieres_ir">¿A donde quieres ir?</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
