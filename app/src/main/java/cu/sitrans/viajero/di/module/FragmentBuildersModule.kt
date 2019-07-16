@@ -1,7 +1,7 @@
 package cu.sitrans.viajero.di.module
 
-import cu.sitrans.viajero.ui.base.trip.TripListFragment
-import cu.sitrans.viajero.ui.base.origin.OriginFragment
+import cu.sitrans.viajero.ui.trip.TripListFragment
+import cu.sitrans.viajero.ui.origin.OriginFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

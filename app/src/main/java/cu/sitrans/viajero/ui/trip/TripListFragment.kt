@@ -1,4 +1,4 @@
-package cu.sitrans.viajero.ui.base.trip
+package cu.sitrans.viajero.ui.trip
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -13,8 +13,6 @@ import cu.sitrans.viajero.mvi.MviView
 import cu.sitrans.viajero.repository.model.Localidad
 import cu.sitrans.viajero.repository.model.Viaje
 import cu.sitrans.viajero.ui.base.AbstractFragment
-import cu.sitrans.viajero.ui.base.origin.Adapter
-import cu.sitrans.viajero.ui.base.origin.OriginIntent
 import cu.sitrans.viajero.viewmodel.ViewModelFactory
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -64,16 +62,19 @@ class TripListFragment : AbstractFragment(), MviView<TripIntent, TripViewState> 
         const val ORIGIN_KEY = "ORIGIN_KEY"
         const val DESTINY_KEY = "DESTINY_KEY"
         const val SELECTED_DATE = "SELECTED_DATE"
-        fun newInstance(origin: Localidad, destiny: Localidad, tripDate: Date) = TripListFragment().apply {
+        const val SELECTED_DATE_BACK = "SELECTED_DATE_BACK"
+        fun newInstance(origin: Localidad, destiny: Localidad, tripDate: Date, tripDateBack: Date?) =
+            TripListFragment().apply {
 
-            val bundle = Bundle()
-            bundle.putString(ORIGIN_KEY, Gson().toJson(origin))
-            bundle.putString(DESTINY_KEY, Gson().toJson(destiny))
-            bundle.putLong(SELECTED_DATE, tripDate.time)
+                val bundle = Bundle()
+                bundle.putString(ORIGIN_KEY, Gson().toJson(origin))
+                bundle.putString(DESTINY_KEY, Gson().toJson(destiny))
+                bundle.putLong(SELECTED_DATE, tripDate.time)
+                bundle.putLong(SELECTED_DATE_BACK, tripDateBack?.time ?: -1)
 
-            this.arguments = bundle
+                this.arguments = bundle
 
-        }
+            }
     }
 
     private lateinit var viewModel: TripListViewModel
@@ -140,6 +141,7 @@ class TripListFragment : AbstractFragment(), MviView<TripIntent, TripViewState> 
     fun getOrigin() = Gson().fromJson(arguments?.getString(ORIGIN_KEY), Localidad::class.java)
     fun getDestiny() = Gson().fromJson(arguments?.getString(DESTINY_KEY), Localidad::class.java)
     fun getSelectedDate() = Date(arguments?.getLong(SELECTED_DATE) ?: -1)
+    fun getSelectedDateBack() = Date(arguments?.getLong(SELECTED_DATE_BACK) ?: -1)
 
     private fun initToolbar() {
         toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back_black_24dp)

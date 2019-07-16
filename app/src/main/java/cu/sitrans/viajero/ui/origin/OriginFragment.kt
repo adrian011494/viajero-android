@@ -1,9 +1,8 @@
-package cu.sitrans.viajero.ui.base.origin
+package cu.sitrans.viajero.ui.origin
 
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.text.format.DateFormat
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment
 
@@ -12,7 +11,7 @@ import cu.sitrans.viajero.R
 import cu.sitrans.viajero.mvi.MviView
 import cu.sitrans.viajero.repository.model.Localidad
 import cu.sitrans.viajero.ui.base.AbstractFragment
-import cu.sitrans.viajero.ui.base.trip.TripListFragment
+import cu.sitrans.viajero.ui.trip.TripListFragment
 import cu.sitrans.viajero.viewmodel.ViewModelFactory
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -26,7 +25,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 import android.widget.Toast
-import cu.sitrans.viajero.MainActivity
 import cu.sitrans.viajero.repository.model.Contacto
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat
 import ir.mirrajabi.searchdialog.core.SearchResultListener
@@ -44,6 +42,7 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
     }
 
     private lateinit var currentTripDate: Date
+    private lateinit var currentTripDateBack: Date
     private lateinit var currentDestiny: Localidad
     private lateinit var currentOrigin: Localidad
     private var currentLocalidades: List<Localidad> = listOf()
@@ -60,7 +59,14 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
 
         actionSearch.setOnClickListener {
             if (this::currentOrigin.isInitialized && this::currentDestiny.isInitialized && this::currentTripDate.isInitialized)
-                start(TripListFragment.newInstance(currentOrigin, currentDestiny, currentTripDate))
+                start(
+                    TripListFragment.newInstance(
+                        currentOrigin,
+                        currentDestiny,
+                        currentTripDate,
+                        if (this::currentTripDateBack.isInitialized) currentTripDateBack else null
+                    )
+                )
         }
 
         selectDate.setOnClickListener {
@@ -72,6 +78,19 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         selectDateInput.setOnClickListener {
             selectTripDate()
         }
+
+
+
+        selectDateBack.setOnClickListener {
+
+            selectTripDate(true)
+
+        }
+
+        selectDateInputBack.setOnClickListener {
+            selectTripDate(true)
+        }
+
 
         origin.setOnItemClickListener { position ->
             currentOrigin = currentLocalidades.get(position)
@@ -102,9 +121,9 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
     }
 
 
-    private fun selectTripDate() {
+    private fun selectTripDate(isBack: Boolean = false) {
         val dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
-            getString(R.string.select_date_dialog),
+            if (isBack) getString(R.string.select_date_back_dialog) else getString(R.string.select_date_dialog),
             getString(android.R.string.ok),
             getString(android.R.string.cancel)
         )
@@ -127,7 +146,10 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         // Set listener
         dateTimeDialogFragment.setOnButtonClickListener(object : SwitchDateTimeDialogFragment.OnButtonClickListener {
             override fun onPositiveButtonClick(date: Date) {
-                changeStartDate(date)
+                if (isBack)
+                    changeBackDate(date)
+                else
+                    changeStartDate(date)
             }
 
             override fun onNegativeButtonClick(date: Date) {
@@ -144,6 +166,19 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         currentTripDate = date
 
         selectDate.setText(
+            SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
+                .format(date)
+        )
+
+        checkAllData()
+
+        selectDateBack.callOnClick()
+    }
+
+    private fun changeBackDate(date: Date) {
+        currentTripDateBack = date
+
+        selectDateBack.setText(
             SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
                 .format(date)
         )
@@ -189,14 +224,13 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
     private val agenciasIntentPublisher = PublishSubject.create<OriginIntent.AgenciasIntent>()
 
 
-    private var loadingDialog:ProgressDialog? = null
+    private var loadingDialog: ProgressDialog? = null
     override fun render(state: OriginViewState) {
 
         if (state.isLoading) {
             loadingDialog = ProgressDialog(requireContext())
             loadingDialog?.show()
-        }
-        else
+        } else
             loadingDialog?.hide()
 
         Timber.w(state.localidades.toString())

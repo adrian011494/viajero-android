@@ -11,11 +11,14 @@
     <string name="seleccione_su_transporte">Seleccione su transporte!</string>
     <string name="bus">Omnibus</string>
     <string name="tren">Tren</string>
-    <string name="select_date_dialog">Seleccione la fecha</string>
+    <string name="select_date_dialog">Seleccione la fecha de ida</string>
+    <string name="select_date_back_dialog">Seleccione la fecha de regreso (Opcional)</string>
     <string name="fecha">Fecha</string>
+    <string name="fecha_ida">Fecha de ida</string>
+    <string name="fecha_regreso">Fecha de regreso (Opcional)</string>
     <string name="climatizado">Climatizado</string>
     <string name="capacidad">Capacidad: %s </string>
     <string name="agencias">Agencias</string>
-    <string name="search">Buscar...</string>
+    <string name="search">Buscar…</string>
     <string name="net_error">Ha ocurrido un error. Verifique su conexión de datos.</string>
 </resources>

@@ -1,4 +1,4 @@
-package cu.sitrans.viajero.ui.base.origin
+package cu.sitrans.viajero.ui.origin
 
 import android.content.Context
 import androidx.fragment.app.Fragment

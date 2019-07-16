@@ -1,4 +1,4 @@
-package cu.sitrans.viajero.ui.base.trip
+package cu.sitrans.viajero.ui.trip
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,6 @@ import cu.sitrans.viajero.R
 import cu.sitrans.viajero.repository.model.Viaje
 import kotlinx.android.synthetic.main.item_trip.view.*
 import java.lang.Exception
-import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 

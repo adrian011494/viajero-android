@@ -1,4 +1,4 @@
-package cu.sitrans.viajero.ui.base.origin
+package cu.sitrans.viajero.ui.origin
 
 import androidx.lifecycle.ViewModel;
 import cu.sitrans.viajero.mvi.MviViewModel

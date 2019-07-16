@@ -1,4 +1,4 @@
-package cu.sitrans.viajero.ui.base.trip
+package cu.sitrans.viajero.ui.trip
 
 import cu.sitrans.viajero.mvi.MviIntent
 

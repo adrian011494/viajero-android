@@ -1,7 +1,6 @@
-package cu.sitrans.viajero.ui.base.trip
+package cu.sitrans.viajero.ui.trip
 
 import cu.sitrans.viajero.mvi.MviViewState
-import cu.sitrans.viajero.repository.model.Localidad
 import cu.sitrans.viajero.repository.model.Viaje
 
 data class TripViewState(

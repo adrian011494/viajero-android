@@ -75,7 +75,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/fecha">
+                        android:hint="@string/fecha_ida">
 
 
                     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
@@ -89,6 +89,28 @@
                             android:editable="false"
                     />
                 </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/selectDateInputBack"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/fecha_regreso">
+
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/selectDateBack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="4dp"
+                            app:fontFamily="@font/roboto_regular"
+                            android:textSize="12sp"
+                            android:layout_marginTop="16dp"
+                            android:editable="false"
+                    />
+                </com.google.android.material.textfield.TextInputLayout>
+
             </LinearLayout>
 
 
@@ -99,7 +121,6 @@
                 android:id="@+id/actionSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:backgroundTint="@color/colorPrimary"
                 app:strokeColor="@color/colorPrimary"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:textColor="@android:color/white"

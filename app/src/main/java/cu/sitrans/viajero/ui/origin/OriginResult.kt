@@ -1,4 +1,4 @@
-package cu.sitrans.viajero.ui.base.origin
+package cu.sitrans.viajero.ui.origin
 
 import cu.sitrans.viajero.mvi.MviResult
 import cu.sitrans.viajero.repository.model.Contacto

@@ -1,8 +1,7 @@
-package cu.sitrans.viajero.ui.base.trip
+package cu.sitrans.viajero.ui.trip
 
 import androidx.lifecycle.ViewModel;
 import cu.sitrans.viajero.mvi.MviViewModel
-import cu.sitrans.viajero.mvi.action_procesor.OriginActionProcessorHolder
 import cu.sitrans.viajero.mvi.action_procesor.TripActionProcessorHolder
 import cu.sitrans.viajero.utils.notOfType
 import io.reactivex.Observable

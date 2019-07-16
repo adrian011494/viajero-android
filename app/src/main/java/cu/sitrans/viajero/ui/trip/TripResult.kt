@@ -1,7 +1,6 @@
-package cu.sitrans.viajero.ui.base.trip
+package cu.sitrans.viajero.ui.trip
 
 import cu.sitrans.viajero.mvi.MviResult
-import cu.sitrans.viajero.repository.model.Localidad
 import cu.sitrans.viajero.repository.model.Viaje
 
 sealed class TripResult : MviResult {

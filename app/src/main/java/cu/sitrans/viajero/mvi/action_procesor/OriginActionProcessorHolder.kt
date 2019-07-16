@@ -2,8 +2,8 @@ package cu.sitrans.viajero.mvi.action_procesor
 
 import cu.sitrans.viajero.mvi.ActionProcessorHolder
 import cu.sitrans.viajero.repository.service.SitransService
-import cu.sitrans.viajero.ui.base.origin.OriginAction
-import cu.sitrans.viajero.ui.base.origin.OriginResult
+import cu.sitrans.viajero.ui.origin.OriginAction
+import cu.sitrans.viajero.ui.origin.OriginResult
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
