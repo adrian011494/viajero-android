@@ -26,4 +26,5 @@
     <string name="sitrans_text"><b>Dir:</b> Neptuno #358 entre Galiano y San Nicolas. Centro Habana\n<b>Email:</b> comercial@sitrans.transnet.cu\n<b>Tel:</b> (+53) 7860 0101</string>
     <string name="todos_los_derechos_reservados_n2018">Todos los derechos reservados 2019</string>
     <string name="version">Versión: %s</string>
+    <string name="ver_mapa">Ver en mapa</string>
 </resources>

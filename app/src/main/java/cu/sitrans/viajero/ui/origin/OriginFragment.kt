@@ -2,6 +2,9 @@ package cu.sitrans.viajero.ui.origin
 
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
+import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.format.DateFormat
@@ -304,19 +307,36 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
                 requireContext(), getString(R.string.agencias),
                 getString(R.string.search), null, ArrayList(state.agencias), object : SearchResultListener<Contacto> {
                     override fun onSelected(dialog: BaseSearchDialogCompat<*>?, item: Contacto?, position: Int) {
-                        val s = SpannableString("Dir: ${item?.direccion ?: "-"}\nTel: ${item?.telefono ?: "-"}")
+                        val s = SpannableString(
+                            "Dir: ${item?.direccion ?: "-"}\nTel: ${item?.telefono ?: "-"}"
+                        )
                         Linkify.addLinks(s, Linkify.ALL)
 
                         AlertDialog.Builder(requireContext())
                             .setTitle(item?.title)
                             .setMessage(s)
                             .setPositiveButton(android.R.string.ok, null)
+                            .apply {
+                                if (!item?.coordenadas.isNullOrBlank())
+                                    setNeutralButton(
+                                        getString(R.string.ver_mapa),
+                                        DialogInterface.OnClickListener { _, _ ->
+                                            val intent = Intent(
+                                                Intent.ACTION_VIEW,
+                                                Uri.parse("geo:${item?.coordenadas?.replace(";", ",")}")
+                                            )
+                                            startActivity(intent)
+
+                                        })
+                            }
                             .create()
                             .apply {
                                 setOnShowListener {
 
                                     this.findViewById<TextView>(android.R.id.message)?.movementMethod =
                                         LinkMovementMethod.getInstance()
+
+                                    this.findViewById<TextView>(android.R.id.message)?.setTextIsSelectable(true)
                                 }
                             }
                             .show()
