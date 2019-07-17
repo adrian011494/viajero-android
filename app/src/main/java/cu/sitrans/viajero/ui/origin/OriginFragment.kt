@@ -1,5 +1,6 @@
 package cu.sitrans.viajero.ui.origin
 
+import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.text.SpannableString
@@ -100,7 +101,7 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
 
         origin.setOnItemClickListener { position ->
             currentOrigin = currentLocalidades.get(position)
-            destiny.requestFocus()
+            destiny.callOnClick()
             checkAllData()
         }
 
@@ -138,6 +139,33 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
 
 
     private fun selectTripDate(isBack: Boolean = false) {
+
+        val c = if (this::currentTripDate.isInitialized) Calendar.getInstance().apply {
+            set(Calendar.YEAR, currentTripDate.year + 1900)
+            set(Calendar.MONTH, currentTripDate.month)
+            set(Calendar.DAY_OF_MONTH, currentTripDate.date)
+        } else Calendar.getInstance()
+
+        val mYear = c.get(Calendar.YEAR)
+        val mMonth = c.get(Calendar.MONTH)
+        val mDay = c.get(Calendar.DAY_OF_MONTH)
+
+        DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+
+            val date = Calendar.getInstance().apply {
+                set(Calendar.YEAR, year)
+                set(Calendar.MONTH, month)
+                set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            }.time
+
+            if (isBack)
+                changeBackDate(date)
+            else
+                changeStartDate(date)
+
+        }, mYear, mMonth, mDay).show()
+
+
         val dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
             if (isBack) getString(R.string.select_date_back_dialog) else getString(R.string.select_date_dialog),
             getString(android.R.string.ok),
@@ -174,7 +202,7 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         })
 
         // Show
-        dateTimeDialogFragment.show(fragmentManager, "dialog_start_time")
+        // dateTimeDialogFragment.show(fragmentManager, "dialog_start_time")
 
     }
 
@@ -182,7 +210,7 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         currentTripDate = date
 
         selectDate.setText(
-            SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
+            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 .format(date)
         )
 
@@ -195,7 +223,7 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         currentTripDateBack = date
 
         selectDateBack.setText(
-            SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
+            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 .format(date)
         )
 

@@ -6,9 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import cu.sitrans.viajero.R
 import cu.sitrans.viajero.repository.model.Viaje
+import cu.sitrans.viajero.utils.toDate
 import kotlinx.android.synthetic.main.item_trip.view.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.*
 
 class AdapterTrip(val itemList: List<Viaje>) : RecyclerView.Adapter<AdapterTrip.TripViewHolder>() {
@@ -37,16 +41,9 @@ class AdapterTrip(val itemList: List<Viaje>) : RecyclerView.Adapter<AdapterTrip.
             itemView.price.text = (get.precio?.toDoubleOrNull()?.toInt() ?: 0).toString() + " $"
 
             try {
-                val dateStart = SimpleDateFormat("yy-MM-dd'T'HH:mm:ss.SSSz", Locale.getDefault()).parse(get.fecha)
                 val dateEnd = SimpleDateFormat("yy-MM-dd'T'HH:mm:ss.SSSz", Locale.getDefault()).parse(get.fecha_llegada)
 
-
-                SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
-                    .format(dateStart)
-
-                itemView.dateStart.text = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
-                    .format(dateStart)
-
+                itemView.dateStart.text = get.fecha?.toDate()
 
                 itemView.dateEnd.text = SimpleDateFormat("hh:mm a", Locale.getDefault())
                     .format(dateEnd)
@@ -76,4 +73,6 @@ class AdapterTrip(val itemList: List<Viaje>) : RecyclerView.Adapter<AdapterTrip.
         }
 
     }
+
+
 }

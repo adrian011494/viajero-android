@@ -3,7 +3,9 @@ package cu.sitrans.viajero.ui.trip
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 
@@ -13,6 +15,7 @@ import cu.sitrans.viajero.mvi.MviView
 import cu.sitrans.viajero.repository.model.Localidad
 import cu.sitrans.viajero.repository.model.Viaje
 import cu.sitrans.viajero.ui.base.AbstractFragment
+import cu.sitrans.viajero.ui.base.SpaceItemDecoration
 import cu.sitrans.viajero.viewmodel.ViewModelFactory
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -22,6 +25,9 @@ import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import android.util.TypedValue
+
+
 
 class TripListFragment : AbstractFragment(), MviView<TripIntent, TripViewState> {
 
@@ -133,18 +139,28 @@ class TripListFragment : AbstractFragment(), MviView<TripIntent, TripViewState> 
         origin.text = getOrigin().Nombre
         destiny.text = getDestiny().Nombre
 
-        tripDate.text = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
+        tripDate.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             .format(getSelectedDate())
 
 
         if (getSelectedDateBack().time > Date(-1).time) {
             tripDateBackLayout.visibility = View.VISIBLE
-            tripDateBack.text = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
+            tripDateBack.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 .format(getSelectedDateBack())
         }
 
 
         list.layoutManager = LinearLayoutManager(requireContext())
+
+        val dip = 8f
+        val r = resources
+        val px = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dip,
+            r.displayMetrics
+        )
+
+        list.addItemDecoration(SpaceItemDecoration(px.toInt(), true, true))
 
     }
 
