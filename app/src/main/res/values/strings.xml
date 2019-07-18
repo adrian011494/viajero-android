@@ -17,14 +17,24 @@
     <string name="fecha_ida">Fecha de ida</string>
     <string name="fecha_regreso">Fecha de regreso (Opcional)</string>
     <string name="climatizado">Climatizado</string>
-    <string name="capacidad">Cap: %s </string>
+    <string name="capacidad">Cap: %s</string>
     <string name="agencias">Agencias</string>
     <string name="search">Buscar…</string>
     <string name="net_error">Ha ocurrido un error. Verifique su conexión de datos.</string>
     <string name="via">Via: %s</string>
     <string name="info">Información</string>
-    <string name="sitrans_text"><b>Dir:</b> Neptuno #358 entre Galiano y San Nicolas. Centro Habana\n<b>Email:</b> comercial@sitrans.transnet.cu\n<b>Tel:</b> (+53) 7860 0101</string>
-    <string name="todos_los_derechos_reservados_n2018">Todos los derechos reservados 2019</string>
+    <string name="sitrans_text">
+        Una app de <b>SITRANS</b> con información de <b>VIAJERO</b>.
+
+        \n\n<b>ATENCIÓN A LA POBLACIÓN</b>
+        \n<b>Tel:</b> 78775644 al 46 ext. 136 De 8.00am a 4.00pm
+        \n<b>Email:</b> viajero@viajero.transnet.cu
+
+    </string>
+    <string name="todos_los_derechos_reservados_n2018">Todos los derechos reservados <b>SITRANS</b> 2019, escribenos a
+        viajando@sitrans.transnet.cu
+    </string>
     <string name="version">Versión: %s</string>
     <string name="ver_mapa">Ver en mapa</string>
+    <string name="tren_coche">Tren %1$s Coche %2$s</string>
 </resources>

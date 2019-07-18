@@ -51,7 +51,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:autoLink="all"
-                android:textColorLink="#BDBDBD"
                 android:textStyle="normal"/>
 
 
@@ -64,6 +63,8 @@
             android:text="@string/todos_los_derechos_reservados_n2018"
             android:textColor="@android:color/white"
             android:textSize="14sp"
+            android:autoLink="all
+"
             android:layout_marginBottom="16dp"
             android:layout_alignParentBottom="true"
             android:textStyle="normal"/>

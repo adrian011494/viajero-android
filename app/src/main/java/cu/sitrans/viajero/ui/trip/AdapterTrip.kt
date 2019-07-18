@@ -32,19 +32,41 @@ class AdapterTrip(val itemList: List<Viaje>) : RecyclerView.Adapter<AdapterTrip.
 
         fun bind(get: Viaje) {
             itemView.title.text = get.denominacion
-            if (get.via.isNullOrBlank())
+
+            val tren = if (get.medio?.contains("Ferro") == true) {
+
+                val mach = "[a-zA-Z]+T(\\d)_C(\\d)".toRegex().find(get.medio ?: "")
+
+                itemView.context.getString(
+                    R.string.tren_coche,
+                    mach?.groups?.get(1)?.value ?: "",
+                    mach?.groups?.get(2)?.value ?: ""
+                )
+            } else
+                ""
+
+            if (get.via.isNullOrBlank()) {
                 itemView.desc.visibility = View.GONE
-            else {
+                itemView.desc.text = ""
+            } else {
                 itemView.desc.visibility = View.VISIBLE
                 itemView.desc.text = itemView.context.getString(R.string.via, get.via ?: "")
             }
+
+            if (tren.isNotBlank()) {
+                itemView.desc.visibility = View.VISIBLE
+                itemView.desc.text = tren +" "+ itemView.desc.text
+
+            }
+
             itemView.price.text = (get.precio?.toDoubleOrNull()?.toInt() ?: 0).toString() + " $"
 
             try {
-                val dateEnd = SimpleDateFormat("yy-MM-dd'T'HH:mm:ss.SSSz", Locale.getDefault()).parse(get.fecha_llegada)
 
                 itemView.dateStart.text = get.fecha?.toDate()
 
+                itemView.dateEnd.text = ""
+                val dateEnd = SimpleDateFormat("yy-MM-dd'T'HH:mm:ss.SSSz", Locale.getDefault()).parse(get.fecha_llegada)
                 itemView.dateEnd.text = SimpleDateFormat("hh:mm a", Locale.getDefault())
                     .format(dateEnd)
 
