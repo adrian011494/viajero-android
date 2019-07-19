@@ -17,7 +17,7 @@
     <string name="fecha_ida">Fecha de ida</string>
     <string name="fecha_regreso">Fecha de regreso (Opcional)</string>
     <string name="climatizado">Climatizado</string>
-    <string name="capacidad">Cap: %s</string>
+    <string name="capacidad"> %s</string>
     <string name="agencias">Agencias</string>
     <string name="search">Buscar…</string>
     <string name="net_error">Ha ocurrido un error. Verifique su conexión de datos.</string>

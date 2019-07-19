@@ -75,6 +75,16 @@ class AdapterTrip(val itemList: List<Viaje>) : RecyclerView.Adapter<AdapterTrip.
                 itemView.dateStart.text = get.fecha?.toDate()
 
                 itemView.dateEnd.text = ""
+
+                val dateStart = SimpleDateFormat("yy/MM/dd HH:mm:ss", Locale.getDefault()).parse(get.fecha?.toDate())
+                itemView.dateStart.text = SimpleDateFormat("yy/MM/dd hh:mm a", Locale.getDefault())
+                    .format(dateStart)
+
+
+
+
+
+
                 val dateEnd = SimpleDateFormat("yy-MM-dd'T'HH:mm:ss.SSSz", Locale.getDefault()).parse(get.fecha_llegada)
                 itemView.dateEnd.text = SimpleDateFormat("hh:mm a", Locale.getDefault())
                     .format(dateEnd)
