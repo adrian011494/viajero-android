@@ -3,6 +3,7 @@ package cu.sitrans.viajero.ui.trip
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import cu.sitrans.viajero.R
 import cu.sitrans.viajero.repository.model.Viaje
@@ -55,11 +56,19 @@ class AdapterTrip(val itemList: List<Viaje>) : RecyclerView.Adapter<AdapterTrip.
 
             if (tren.isNotBlank()) {
                 itemView.desc.visibility = View.VISIBLE
-                itemView.desc.text = tren +" "+ itemView.desc.text
+                itemView.desc.text = tren + " " + itemView.desc.text
 
             }
 
+
+
             itemView.price.text = (get.precio?.toDoubleOrNull()?.toInt() ?: 0).toString() + " $"
+
+
+            if (get.precio == null)
+                itemView.price.visibility = View.GONE
+            else
+                itemView.price.visibility = View.VISIBLE
 
             try {
 
@@ -91,6 +100,25 @@ class AdapterTrip(val itemList: List<Viaje>) : RecyclerView.Adapter<AdapterTrip.
                 itemView.tripIda.visibility = View.GONE
                 itemView.tripBack.visibility = View.VISIBLE
             }
+
+            val currentDate = Date()
+            val dateTrip = SimpleDateFormat("yy-MM-dd'T'HH:mm:ss.SSSz", Locale.getDefault()).parse(get.fecha)
+
+            val days = (dateTrip.time - currentDate.time) / (24 * 60 * 60 * 1000)
+
+            if ((tren.isNullOrBlank() && days>=90) || (tren.isNotBlank() && days >= 30)){
+                itemView.tripIda.setColorFilter(ContextCompat.getColor(itemView.context, R.color.descText), android.graphics.PorterDuff.Mode.SRC_IN)
+                itemView.tripBack.setColorFilter(ContextCompat.getColor(itemView.context, R.color.descText), android.graphics.PorterDuff.Mode.SRC_IN)
+                itemView.price.setTextColor(ContextCompat.getColor(itemView.context, R.color.descText))
+
+            }
+            else {
+                itemView.tripIda.setColorFilter(ContextCompat.getColor(itemView.context, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN)
+                itemView.tripBack.setColorFilter(ContextCompat.getColor(itemView.context, R.color.colorPrimary), android.graphics.PorterDuff.Mode.SRC_IN)
+
+                itemView.price.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorAccent))
+            }
+
 
         }
 

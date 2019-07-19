@@ -101,6 +101,15 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
             selectTripDate(true)
         }
 
+        origin.setOnClickListener {
+            if(currentLocalidades.isEmpty())
+                refreshIntentPublisher.onNext(OriginIntent.RefreshIntent)
+        }
+
+        destiny.setOnClickListener {
+            if(currentLocalidades.isEmpty())
+                refreshIntentPublisher.onNext(OriginIntent.RefreshIntent)
+        }
 
         origin.setOnItemClickListener { position ->
             currentOrigin = currentLocalidades.get(position)
@@ -126,6 +135,7 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
                 showInfoView()
             return@setOnMenuItemClickListener true
         }
+        bind()
     }
 
     private fun showInfoView() {
@@ -241,15 +251,11 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
     }
 
 
-    override fun onResume() {
-        super.onResume()
-        bind()
-    }
 
-
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
         disposables.clear()
+        super.onDestroy()
+
     }
 
     override fun intents(): Observable<OriginIntent> {
@@ -281,7 +287,6 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         } else
             loadingDialog?.hide()
 
-        Timber.w(state.localidades.toString())
         Timber.e(state.error)
 
         if (state.localidades.isNotEmpty()) {
@@ -297,10 +302,10 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
             origin.isEnabled = true
             destiny.isEnabled = true
 
-        } else {
+        }/* else {
             origin.isEnabled = false
             destiny.isEnabled = false
-        }
+        }*/
 
         if (state.agencias.isNotEmpty()) {
             SimpleSearchDialogCompat(

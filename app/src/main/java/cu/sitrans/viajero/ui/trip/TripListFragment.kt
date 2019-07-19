@@ -47,6 +47,18 @@ class TripListFragment : AbstractFragment(), MviView<TripIntent, TripViewState> 
         currentTripList.addAll(state.viajes)
 
         currentTripList = currentTripList.distinct().toMutableList()
+            .filter {
+                it.denominacion?.contains("NO HAY") == false
+            }
+            .map {
+                if (it.medio == null)
+                    it.copy(
+                        medio = "Omnibus"
+                    )
+                else
+                    it
+            }
+            .toMutableList()
 
         when (tabs.selectedTabPosition) {
             0 -> {
