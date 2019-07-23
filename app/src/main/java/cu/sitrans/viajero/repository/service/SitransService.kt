@@ -14,7 +14,7 @@ class SitransService @Inject constructor(val api: SitransAuthApi) {
 
     fun agencias() = api.agencias()
         .map {
-            it.Agencias.contacto
+            it.entries.entry
         }
 
 
