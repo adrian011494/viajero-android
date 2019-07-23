@@ -12,6 +12,6 @@ data class Contacto(
     val telefono: String?
 ) : Searchable {
     override fun getTitle(): String {
-        return agencia
+        return "$provincia - $agencia"
     }
 }

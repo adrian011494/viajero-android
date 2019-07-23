@@ -35,11 +35,13 @@ import java.util.*
 import javax.inject.Inject
 import android.widget.Toast
 import cu.sitrans.viajero.repository.model.Contacto
+import cu.sitrans.viajero.ui.agencia.AgenciasFragment
 import cu.sitrans.viajero.ui.info.InfoFragment
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat
 import ir.mirrajabi.searchdialog.core.SearchResultListener
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState> {
@@ -102,12 +104,12 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         }
 
         origin.setOnClickListener {
-            if(currentLocalidades.isEmpty())
+            if (currentLocalidades.isEmpty())
                 refreshIntentPublisher.onNext(OriginIntent.RefreshIntent)
         }
 
         destiny.setOnClickListener {
-            if(currentLocalidades.isEmpty())
+            if (currentLocalidades.isEmpty())
                 refreshIntentPublisher.onNext(OriginIntent.RefreshIntent)
         }
 
@@ -251,7 +253,6 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
     }
 
 
-
     override fun onDestroy() {
         disposables.clear()
         super.onDestroy()
@@ -308,6 +309,19 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         }*/
 
         if (state.agencias.isNotEmpty()) {
+
+
+//            val items = state.agencias.groupBy {
+//                it.provincia!!
+//            }.toList()
+//
+//            start(AgenciasFragment.newInstance(items))
+//
+
+
+
+
+
             SimpleSearchDialogCompat(
                 requireContext(), getString(R.string.agencias),
                 getString(R.string.search), null, ArrayList(state.agencias), object : SearchResultListener<Contacto> {
