@@ -22,7 +22,8 @@ class Preferences @Inject constructor(app: Application) {
 
 
     fun getAuthToken(): String {
-        return sharedPreferences.getString(ACCESS_TOKEN, "4f3fc3a8-14c0-38d3-a122-fef22c3e00fb") ?: ""
+        //return sharedPreferences.getString(ACCESS_TOKEN, "4f3fc3a8-14c0-38d3-a122-fef22c3e00fb") ?: ""
+        return sharedPreferences.getString(ACCESS_TOKEN, "543e40e0-358d-36f7-973d-764bd4c84d6b") ?: ""
     }
 
     fun setAuthToken(token:String) {

@@ -14,29 +14,34 @@
             android:layout_width="match_parent"
             android:theme="@style/AppTheme.AppBarOverlay">
 
+        <!--Edgar tenia android:background="@color/colorPrimary"-->
         <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
                 android:fitsSystemWindows="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:toolbarId="@+id/toolbar"
-
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:contentScrim="?attr/colorPrimary">
+                android:background="@color/colorPrimaryDark"
+                app:contentScrim="?attr/colorPrimaryDark"> <!--Edgar tenia android:background="@color/colorPrimary"-->
 
+            <!--Edgar tenia android:background="@color/colorPrimary"-->
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_width="match_parent"
                     app:layout_collapseMode="pin"
+                    android:background="@color/colorPrimaryDark"
                     app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
+            <!--Edgar tenia android:background="@color/colorPrimary"-->
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="vertical"
                     android:layout_marginTop="50dp"
+                    android:background="@color/colorPrimaryDark"
                     android:gravity="center">
 
 

@@ -39,15 +39,37 @@ class TripActionProcessorHolder @Inject constructor(val sitransService: SitransS
         ObservableTransformer<TripAction.LoadPlacesList, TripResult> { actions ->
             actions.flatMap { action ->
 
-                sitransService.trips(action.origin, action.destiny, action.date, action.dateBack)
+                //Original
+                /*sitransService.trips(action.origin, action.destiny, action.date, action.dateBack)
 
                     .concatWith(sitransService.tripsOnlyIda(action.destiny, action.origin, action.dateBack).map {
                         it.map {
                             it.tipo = "Regreso"
                             it
                         }
-                    })
+                    })*/
 
+                    //Edgar ***** Un parche pues en action.dateBack viene con fecha 31/12/69 ademas, concatena Ida con Regreso
+                    if (action.date.compareTo(action.dateBack) > 0) {
+                        sitransService.tripsOnlyIda(action.origin, action.destiny, action.date)
+
+                            /*.concatWith(sitransService.tripsOnlyIda(action.destiny, action.origin, action.date).map {
+                                it.map {
+                                    it.tipo = "Ida"
+                                    it
+                                }
+                            })*/
+                    }
+                    else {
+                        sitransService.trips(action.origin, action.destiny, action.date, action.dateBack)
+
+                            /*.concatWith(sitransService.trips(action.destiny, action.origin, action.date, action.dateBack).map {
+                                it.map {
+                                    it.tipo = "Regreso"
+                                    it
+                                }
+                            })*/
+                    }//******
 
                     .map {
                         TripResult.LoadPlacesResult.Success(it)

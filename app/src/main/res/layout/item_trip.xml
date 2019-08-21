@@ -63,7 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:fontFamily="@font/roboto_regular"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:layout_gravity="center"
                         android:drawableEnd="@drawable/ic_airline_seat_recline_extra_black_24dp"
 

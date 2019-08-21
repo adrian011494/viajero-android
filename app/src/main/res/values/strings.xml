@@ -21,10 +21,12 @@
     <string name="agencias">Agencias</string>
     <string name="search">Buscar…</string>
     <string name="net_error">Ha ocurrido un error. Verifique su conexión de datos.</string>
+    <string name="fecharegreso_error">La fecha de regreso es anterior a la de ida. Verifique los datos.</string>
+    <string name="destinoigualorigen_error">La localidad de origen y destino es la misma. Verifique los datos.</string>
     <string name="via">Via: %s</string>
     <string name="info">Información</string>
     <string name="sitrans_text">
-        Una app de <b>SITRANS</b> con información de <b>VIAJERO</b>.
+        Una app de <b>SITRANS</b> con información de <b>VIAJERO</b>
 
         \n\n<b>ATENCIÓN A LA POBLACIÓN</b>
         \n<b>Tel:</b> 78775644 al 46 ext. 136 De 8.00am a 4.00pm
@@ -33,6 +35,7 @@
     </string>
     <string name="todos_los_derechos_reservados_n2018">Todos los derechos reservados <b>SITRANS</b> 2019, escribenos a
         viajando@sitrans.transnet.cu
+
     </string>
     <string name="version">Versión: %s</string>
     <string name="ver_mapa">Ver en mapa</string>

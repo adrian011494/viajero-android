@@ -5,12 +5,14 @@ import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.format.DateFormat
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
 import android.view.View
+import android.widget.DatePicker
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment
@@ -62,6 +64,13 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
 
     private val disposables: CompositeDisposable = CompositeDisposable()
 
+    //Edgar
+    private var mYear90: Int = 0
+    private var mMonth90: Int = 0
+    private var mDay90: Int = 0
+    private var currentTripDateBackOK: Boolean = true
+    //*************
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -76,9 +85,21 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
                         currentOrigin,
                         currentDestiny,
                         currentTripDate,
-                        if (this::currentTripDateBack.isInitialized) currentTripDateBack else null
+                        //if (this::currentTripDateBack.isInitialized) // original
+                        //Edgar
+                        if (this::currentTripDateBack.isInitialized && (currentTripDateBackOK) && (!(selectDateBack.getText().toString().equals(""))))
+                        currentTripDateBack
+                        else null
                     )
                 )
+
+        }
+
+        //Edgar
+        actionClearDateInputBack.setOnClickListener {
+            selectDateBack.setText("")
+            currentTripDateBackOK = true
+            actionClearDateInputBack.visibility = View.INVISIBLE
         }
 
         selectDate.setOnClickListener {
@@ -91,12 +112,8 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
             selectTripDate()
         }
 
-
-
         selectDateBack.setOnClickListener {
-
             selectTripDate(true)
-
         }
 
         selectDateInputBack.setOnClickListener {
@@ -116,11 +133,19 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         origin.setOnItemClickListener { position ->
             currentOrigin = currentLocalidades.get(position)
             destiny.callOnClick()
+
+            if (this::currentOrigin.isInitialized && this::currentDestiny.isInitialized && (currentOrigin.equals(currentDestiny))) {
+                Toast.makeText(requireContext(), getString(R.string.destinoigualorigen_error), Toast.LENGTH_SHORT).show()
+            }
+
             checkAllData()
         }
 
         destiny.setOnItemClickListener { position ->
             currentDestiny = currentLocalidades.get(position)
+            if (this::currentOrigin.isInitialized && this::currentDestiny.isInitialized && (currentOrigin.equals(currentDestiny))) {
+                Toast.makeText(requireContext(), getString(R.string.destinoigualorigen_error), Toast.LENGTH_SHORT).show()
+            }
             checkAllData()
             hideSoftInput()
             if (!this::currentTripDate.isInitialized)
@@ -141,10 +166,7 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
     }
 
     private fun showInfoView() {
-
-
         start(InfoFragment.newInstance())
-
     }
 
 
@@ -165,7 +187,8 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         val mMonth = c.get(Calendar.MONTH)
         val mDay = c.get(Calendar.DAY_OF_MONTH)
 
-        DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+        //Edgar val dpd ****
+        val dpd = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
 
             val date = Calendar.getInstance().apply {
                 set(Calendar.YEAR, year)
@@ -178,15 +201,25 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
             else
                 changeStartDate(date)
 
-        }, mYear, mMonth, mDay).show()
+        }, mYear, mMonth, mDay)
 
+        //Edgar
+        val d = Calendar.getInstance()
+        dpd.getDatePicker().setMinDate(d.getTimeInMillis())
+        d.add(6,90)
+        mYear90 = d.get(Calendar.YEAR)
+        mMonth90 = d.get(Calendar.MONTH)
+        mDay90 = d.get(Calendar.DAY_OF_MONTH)
+        dpd.getDatePicker().setMaxDate(d.getTimeInMillis())
+        //****************
+
+        dpd.show()
 
         val dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
             if (isBack) getString(R.string.select_date_back_dialog) else getString(R.string.select_date_dialog),
             getString(android.R.string.ok),
             getString(android.R.string.cancel)
         )
-
 
         // Assign values
         dateTimeDialogFragment.startAtCalendarView()
@@ -198,6 +231,16 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
             Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
 
         ).time
+
+        //Edgar ****
+        dateTimeDialogFragment.maximumDateTime = GregorianCalendar(
+
+            mYear90,
+            mMonth90,
+            mDay90
+
+        ).time
+        //*******
 
         if (this::currentTripDate.isInitialized)
             dateTimeDialogFragment.setDefaultDateTime(currentTripDate)
@@ -231,17 +274,46 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
 
         checkAllData()
 
-        selectDateBack.callOnClick()
+        //selectDateBack.callOnClick()
     }
 
     private fun changeBackDate(date: Date) {
-        currentTripDateBack = date
 
-        selectDateBack.setText(
-            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                .format(date)
-        )
+        if (this::currentTripDate.isInitialized){
+            if (currentTripDate.compareTo(date) <= 0) {//Edgar
+                currentTripDateBack = date
+                currentTripDateBackOK = true //Edgar
 
+                selectDateBack.setText(
+                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                        .format(date)
+                )
+
+                actionClearDateInputBack.visibility = View.VISIBLE
+
+            } else { //Edgar
+                currentTripDateBack = date
+                selectDateBack.setText(
+                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                        .format(date)
+                )
+                currentTripDateBackOK = false
+                Toast.makeText(requireContext(), getString(R.string.fecharegreso_error), Toast.LENGTH_SHORT).show()
+
+                actionClearDateInputBack.visibility = View.VISIBLE
+
+            }
+        }
+        else
+        {
+            currentTripDateBack = date
+            selectDateBack.setText(
+                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    .format(date)
+            )
+
+            actionClearDateInputBack.visibility = View.VISIBLE
+        }
         checkAllData()
     }
 
@@ -293,11 +365,7 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         if (state.localidades.isNotEmpty()) {
             currentLocalidades = state.localidades
 
-
-
             origin.setItems(state.localidades.map { it.Nombre }.toTypedArray())
-
-
 
             destiny.setItems(state.localidades.map { it.Nombre }.toTypedArray())
             origin.isEnabled = true
@@ -317,9 +385,6 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
 //
 //            start(AgenciasFragment.newInstance(items))
 //
-
-
-
 
 
             SimpleSearchDialogCompat(
@@ -374,9 +439,16 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
 
     }
 
-    private fun checkAllData() {
-        actionSearch.isEnabled =
+    private fun checkAllData() {//Edgar && currentTripDateBackOK
+        //original
+        /*actionSearch.isEnabled =
             this::currentOrigin.isInitialized && this::currentDestiny.isInitialized && this::currentTripDate.isInitialized
+            */
+
+        //Edgar************
+        actionSearch.isEnabled =
+                this::currentOrigin.isInitialized && this::currentDestiny.isInitialized && (!currentOrigin.equals(currentDestiny)) && this::currentTripDate.isInitialized && currentTripDateBackOK
+        //**************
 
     }
 

@@ -6,12 +6,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="16dp"
-                android:background="@color/colorPrimary">
+                android:background="@color/colorPrimaryDark"> <!--Edgar tenia android:background="@color/colorPrimary"-->
 
     <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:id="@+id/LinearLayoutCompat1"
             android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -38,9 +39,12 @@
 
         <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
-                android:layout_height="120dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
                 app:srcCompat="@mipmap/ic_launcher"/>
 
         <TextView
@@ -53,10 +57,24 @@
                 android:autoLink="all"
                 android:textStyle="normal"/>
 
-
+        <!--Original  Edgar -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="90dp"
+                android:text="@string/todos_los_derechos_reservados_n2018"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:autoLink="all"
+                android:layout_below="@+id/LinearLayoutCompat1"
+                android:textStyle="normal"
+                android:layout_marginTop="20dp"
+                android:gravity="bottom|center_horizontal" android:layout_marginBottom="100dp"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <!--Original
+
     <TextView
+             <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -68,4 +86,8 @@
             android:layout_marginBottom="16dp"
             android:layout_alignParentBottom="true"
             android:textStyle="normal"/>
+            -->
+
+
+
 </RelativeLayout>

@@ -25,6 +25,7 @@ class AdapterTrip(val itemList: List<Viaje>) : RecyclerView.Adapter<AdapterTrip.
     override fun getItemCount(): Int = itemList.size
 
     override fun onBindViewHolder(holder: TripViewHolder, position: Int) {
+
         holder.bind(itemList.get(position))
     }
 
@@ -138,6 +139,7 @@ class AdapterTrip(val itemList: List<Viaje>) : RecyclerView.Adapter<AdapterTrip.
 
 
         }
+
 
     }
 

@@ -46,6 +46,7 @@ class TripListFragment : AbstractFragment(), MviView<TripIntent, TripViewState> 
 
         currentTripList.addAll(state.viajes)
 
+
         currentTripList = currentTripList.distinct().toMutableList()
             .filter {
                 it.denominacion?.contains("NO HAY") == false
