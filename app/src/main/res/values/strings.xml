@@ -40,4 +40,5 @@
     <string name="version">Versión: %s</string>
     <string name="ver_mapa">Ver en mapa</string>
     <string name="tren_coche">Tren %1$s Coche %2$s</string>
+    <string name="no_map_app">No hay ninguna aplicación instalada para ver el mapa.</string>
 </resources>

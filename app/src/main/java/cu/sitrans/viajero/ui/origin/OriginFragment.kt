@@ -2,6 +2,7 @@ package cu.sitrans.viajero.ui.origin
 
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
+import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
@@ -44,6 +45,7 @@ import cu.sitrans.viajero.ui.info.InfoFragment
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat
 import ir.mirrajabi.searchdialog.core.SearchResultListener
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat
+import java.lang.Exception
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -221,10 +223,10 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
 
         //Edgar
         val d = Calendar.getInstance()
-        dpd.datePicker.minDate = if (isBack && this::currentTripDate.isInitialized)
+        dpd.datePicker.minDate = (if (isBack && this::currentTripDate.isInitialized)
             currentTripDate.time
         else
-            d.timeInMillis
+            d.timeInMillis) - 1000
 
 
         d.add(6, 90)
@@ -365,7 +367,14 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
                                                 Intent.ACTION_VIEW,
                                                 Uri.parse("geo:${item?.coordenadas?.replace(";", ",")}")
                                             )
-                                            startActivity(intent)
+                                            try {
+
+                                                startActivity(intent)
+                                            }catch (e:Exception){
+                                                if (e is ActivityNotFoundException){
+                                                    Toast.makeText(requireContext(), getString(R.string.no_map_app), Toast.LENGTH_SHORT).show()
+                                                }
+                                            }
 
                                         })
                             }

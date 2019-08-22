@@ -38,7 +38,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="56dp">
+                android:layout_marginStart="56dp" android:layout_marginLeft="56dp">
 
             <LinearLayout
                     android:id="@+id/timeView"
@@ -46,7 +46,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="16dp">
+                    android:layout_marginStart="16dp" android:layout_marginLeft="16dp"
+                    android:layout_alignParentRight="true">
 
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/price"
@@ -65,10 +66,12 @@
                         app:fontFamily="@font/roboto_regular"
                         android:textSize="14sp"
                         android:layout_gravity="center"
-                        android:drawableEnd="@drawable/ic_airline_seat_recline_extra_black_24dp"
-
+                        android:drawableEnd="@drawable/ic_seat"
                         android:textColor="@color/subTextColor"
-                        tools:text="@string/capacidad"/>
+                        tools:text="1"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:drawableRight="@drawable/ic_seat"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/clima"
@@ -88,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_toStartOf="@id/timeView">
+                    android:layout_toStartOf="@id/timeView" android:layout_toLeftOf="@id/timeView">
 
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/title"
