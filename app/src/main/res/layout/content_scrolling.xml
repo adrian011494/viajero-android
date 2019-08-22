@@ -86,6 +86,7 @@
                             app:fontFamily="@font/roboto_regular"
                             android:textSize="12sp"
                             android:layout_marginTop="16dp"
+                            android:focusableInTouchMode="false"
                             android:editable="false"
                     />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -114,7 +115,8 @@
 
                 <!--Edgar-->
                 <RelativeLayout android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                >
 
                     <!--Edgar En layout_marginTop habia un 16-->
                     <com.google.android.material.textfield.TextInputLayout
@@ -132,30 +134,29 @@
                                 app:fontFamily="@font/roboto_regular"
                                 android:textSize="12sp"
                                 android:layout_marginTop="16dp"
+                                android:focusableInTouchMode="false"
                                 android:editable="false"
+
                         />
+
+
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!--Edgar Usar un ic_clear-->
-                    <com.google.android.material.button.MaterialButton
-                            android:layout_width="72dp"
-                            android:layout_height="33dp"
+                    <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/actionClearDateInputBack"
-                            app:fontFamily="@font/roboto_medium"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginLeft="1dp"
-                            android:layout_marginRight="10dp"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/colorAccent"
-                            android:clickable="true"
-                            android:text=" X"
-                            android:layout_marginTop="3dp"
-                            android:visibility="invisible"
-                            android:background="@color/ic_launcher_background"
-                            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                            app:strokeColor="@color/colorPrimaryDark"
-                            app:backgroundTint="@color/ic_launcher_background" android:gravity="right"/>
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+
+                            android:layout_alignBottom="@id/selectDateInputBack"
+                            android:layout_alignParentEnd="true"
+                            app:srcCompat="@drawable/ic_close"
+                            android:layout_marginBottom="4dp"
+                            android:padding="6dp"
+                            android:scaleType="fitXY"
+                            android:tint="@color/red"
+                            android:layout_alignParentRight="true"/>
+
+
                 </RelativeLayout>
 
             </LinearLayout>

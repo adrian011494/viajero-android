@@ -11,6 +11,7 @@ import android.text.SpannableString
 import android.text.format.DateFormat
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
+import android.view.MotionEvent
 import android.view.View
 import android.widget.DatePicker
 import android.widget.TextView
@@ -38,6 +39,7 @@ import javax.inject.Inject
 import android.widget.Toast
 import cu.sitrans.viajero.repository.model.Contacto
 import cu.sitrans.viajero.ui.agencia.AgenciasFragment
+import cu.sitrans.viajero.ui.base.DrawableClickListener
 import cu.sitrans.viajero.ui.info.InfoFragment
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat
 import ir.mirrajabi.searchdialog.core.SearchResultListener
@@ -87,14 +89,18 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
                         currentTripDate,
                         //if (this::currentTripDateBack.isInitialized) // original
                         //Edgar
-                        if (this::currentTripDateBack.isInitialized && (currentTripDateBackOK) && (!(selectDateBack.getText().toString().equals(""))))
-                        currentTripDateBack
+                        if (this::currentTripDateBack.isInitialized && (currentTripDateBackOK) && (!(selectDateBack.getText().toString().equals(
+                                ""
+                            )))
+                        )
+                            currentTripDateBack
                         else null
                     )
                 )
 
         }
 
+        actionClearDateInputBack.visibility = View.GONE
         //Edgar
         actionClearDateInputBack.setOnClickListener {
             selectDateBack.setText("")
@@ -111,6 +117,7 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         selectDateInput.setOnClickListener {
             selectTripDate()
         }
+
 
         selectDateBack.setOnClickListener {
             selectTripDate(true)
@@ -134,8 +141,12 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
             currentOrigin = currentLocalidades.get(position)
             destiny.callOnClick()
 
-            if (this::currentOrigin.isInitialized && this::currentDestiny.isInitialized && (currentOrigin.equals(currentDestiny))) {
-                Toast.makeText(requireContext(), getString(R.string.destinoigualorigen_error), Toast.LENGTH_SHORT).show()
+            if (this::currentOrigin.isInitialized && this::currentDestiny.isInitialized && (currentOrigin.equals(
+                    currentDestiny
+                ))
+            ) {
+                Toast.makeText(requireContext(), getString(R.string.destinoigualorigen_error), Toast.LENGTH_SHORT)
+                    .show()
             }
 
             checkAllData()
@@ -143,8 +154,12 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
 
         destiny.setOnItemClickListener { position ->
             currentDestiny = currentLocalidades.get(position)
-            if (this::currentOrigin.isInitialized && this::currentDestiny.isInitialized && (currentOrigin.equals(currentDestiny))) {
-                Toast.makeText(requireContext(), getString(R.string.destinoigualorigen_error), Toast.LENGTH_SHORT).show()
+            if (this::currentOrigin.isInitialized && this::currentDestiny.isInitialized && (currentOrigin.equals(
+                    currentDestiny
+                ))
+            ) {
+                Toast.makeText(requireContext(), getString(R.string.destinoigualorigen_error), Toast.LENGTH_SHORT)
+                    .show()
             }
             checkAllData()
             hideSoftInput()
@@ -188,79 +203,39 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
         val mDay = c.get(Calendar.DAY_OF_MONTH)
 
         //Edgar val dpd ****
-        val dpd = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+        val dpd =
+            DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
 
-            val date = Calendar.getInstance().apply {
-                set(Calendar.YEAR, year)
-                set(Calendar.MONTH, month)
-                set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            }.time
+                val date = Calendar.getInstance().apply {
+                    set(Calendar.YEAR, year)
+                    set(Calendar.MONTH, month)
+                    set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                }.time
 
-            if (isBack)
-                changeBackDate(date)
-            else
-                changeStartDate(date)
-
-        }, mYear, mMonth, mDay)
-
-        //Edgar
-        val d = Calendar.getInstance()
-        dpd.getDatePicker().setMinDate(d.getTimeInMillis())
-        d.add(6,90)
-        mYear90 = d.get(Calendar.YEAR)
-        mMonth90 = d.get(Calendar.MONTH)
-        mDay90 = d.get(Calendar.DAY_OF_MONTH)
-        dpd.getDatePicker().setMaxDate(d.getTimeInMillis())
-        //****************
-
-        dpd.show()
-
-        val dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
-            if (isBack) getString(R.string.select_date_back_dialog) else getString(R.string.select_date_dialog),
-            getString(android.R.string.ok),
-            getString(android.R.string.cancel)
-        )
-
-        // Assign values
-        dateTimeDialogFragment.startAtCalendarView()
-        dateTimeDialogFragment.set24HoursMode(DateFormat.is24HourFormat(this.requireContext()))
-        dateTimeDialogFragment.minimumDateTime = GregorianCalendar(
-
-            Calendar.getInstance().get(Calendar.YEAR),
-            Calendar.getInstance().get(Calendar.MONTH),
-            Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-
-        ).time
-
-        //Edgar ****
-        dateTimeDialogFragment.maximumDateTime = GregorianCalendar(
-
-            mYear90,
-            mMonth90,
-            mDay90
-
-        ).time
-        //*******
-
-        if (this::currentTripDate.isInitialized)
-            dateTimeDialogFragment.setDefaultDateTime(currentTripDate)
-
-        // Set listener
-        dateTimeDialogFragment.setOnButtonClickListener(object : SwitchDateTimeDialogFragment.OnButtonClickListener {
-            override fun onPositiveButtonClick(date: Date) {
                 if (isBack)
                     changeBackDate(date)
                 else
                     changeStartDate(date)
-            }
 
-            override fun onNegativeButtonClick(date: Date) {
-                // Date is get on negative button click
-            }
-        })
+            }, mYear, mMonth, mDay)
 
-        // Show
-        // dateTimeDialogFragment.show(fragmentManager, "dialog_start_time")
+        //Edgar
+        val d = Calendar.getInstance()
+        dpd.datePicker.minDate = if (isBack && this::currentTripDate.isInitialized)
+            currentTripDate.time
+        else
+            d.timeInMillis
+
+
+        d.add(6, 90)
+        mYear90 = d.get(Calendar.YEAR)
+        mMonth90 = d.get(Calendar.MONTH)
+        mDay90 = d.get(Calendar.DAY_OF_MONTH)
+        dpd.datePicker.maxDate = d.timeInMillis
+        //****************
+
+        dpd.show()
+
 
     }
 
@@ -279,41 +254,22 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
 
     private fun changeBackDate(date: Date) {
 
-        if (this::currentTripDate.isInitialized){
-            if (currentTripDate.compareTo(date) <= 0) {//Edgar
-                currentTripDateBack = date
-                currentTripDateBackOK = true //Edgar
+        if (this::currentTripDate.isInitialized && currentTripDate.compareTo(date) > 0) {
 
-                selectDateBack.setText(
-                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                        .format(date)
-                )
+            currentTripDateBackOK = false
+            Toast.makeText(requireContext(), getString(R.string.fecharegreso_error), Toast.LENGTH_SHORT).show()
 
-                actionClearDateInputBack.visibility = View.VISIBLE
-
-            } else { //Edgar
-                currentTripDateBack = date
-                selectDateBack.setText(
-                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                        .format(date)
-                )
-                currentTripDateBackOK = false
-                Toast.makeText(requireContext(), getString(R.string.fecharegreso_error), Toast.LENGTH_SHORT).show()
-
-                actionClearDateInputBack.visibility = View.VISIBLE
-
-            }
         }
-        else
-        {
-            currentTripDateBack = date
-            selectDateBack.setText(
-                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                    .format(date)
-            )
+        currentTripDateBackOK = true
+        currentTripDateBack = date
+        selectDateBack.setText(
+            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                .format(date)
+        )
 
-            actionClearDateInputBack.visibility = View.VISIBLE
-        }
+        actionClearDateInputBack.visibility = View.VISIBLE
+
+
         checkAllData()
     }
 
@@ -387,7 +343,7 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
 //
 
 
-            SimpleSearchDialogCompat(
+            val dialog = SimpleSearchDialogCompat(
                 requireContext(), getString(R.string.agencias),
                 getString(R.string.search), null, ArrayList(state.agencias), object : SearchResultListener<Contacto> {
                     override fun onSelected(dialog: BaseSearchDialogCompat<*>?, item: Contacto?, position: Int) {
@@ -429,7 +385,17 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
                     }
 
                 }
-            ).show()
+            )
+
+
+            dialog.setOnShowListener {
+                dialog.findViewById<View>(ir.mirrajabi.searchdialog.R.id.dummy_background)
+                    ?.setOnClickListener(View.OnClickListener { })
+            }
+
+            dialog.show()
+
+
         }
 
 
@@ -447,7 +413,9 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
 
         //Edgar************
         actionSearch.isEnabled =
-                this::currentOrigin.isInitialized && this::currentDestiny.isInitialized && (!currentOrigin.equals(currentDestiny)) && this::currentTripDate.isInitialized && currentTripDateBackOK
+            this::currentOrigin.isInitialized && this::currentDestiny.isInitialized && (!currentOrigin.equals(
+                currentDestiny
+            )) && this::currentTripDate.isInitialized && currentTripDateBackOK
         //**************
 
     }
