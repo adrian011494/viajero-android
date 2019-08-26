@@ -283,11 +283,12 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
     }
 
 
-    override fun onDestroy() {
-        disposables.clear()
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
 
+        disposables.clear()
     }
+
 
     override fun intents(): Observable<OriginIntent> {
         return Observable.merge(
@@ -310,6 +311,7 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
     override fun render(state: OriginViewState) {
 
         if (state.isLoading) {
+            loadingDialog?.cancel()
             loadingDialog = ProgressDialog(requireContext())
                 .apply {
                     setCancelable(false)
@@ -370,9 +372,13 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
                                             try {
 
                                                 startActivity(intent)
-                                            }catch (e:Exception){
-                                                if (e is ActivityNotFoundException){
-                                                    Toast.makeText(requireContext(), getString(R.string.no_map_app), Toast.LENGTH_SHORT).show()
+                                            } catch (e: Exception) {
+                                                if (e is ActivityNotFoundException) {
+                                                    Toast.makeText(
+                                                        requireContext(),
+                                                        getString(R.string.no_map_app),
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
                                                 }
                                             }
 
@@ -412,6 +418,11 @@ class OriginFragment : AbstractFragment(), MviView<OriginIntent, OriginViewState
             Toast.makeText(requireContext(), getString(R.string.net_error), Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        loadingDialog?.cancel()
     }
 
     private fun checkAllData() {//Edgar && currentTripDateBackOK
