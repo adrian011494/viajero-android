@@ -115,4 +115,7 @@ dependencies {
 
     implementation 'com.github.zhukic:sectioned-recyclerview:1.2.3'
 
+    implementation 'com.github.adrian011494:apklisupdate:1.0'
+
+
 }

@@ -52,6 +52,8 @@
                         android:layout_marginBottom="10dp"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:weightSum="7"
+
                 >
                     <!--Original
                                         <androidx.appcompat.widget.AppCompatTextView
@@ -70,7 +72,8 @@
                     <!--Edgar android:layout_width="140dp" android:maxLines="4"-->
                     <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/origin"
-                            android:layout_width="150dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
                             android:layout_height="wrap_content"
                             app:fontFamily="@font/roboto_medium"
                             android:textSize="24sp"
@@ -81,10 +84,12 @@
                             android:layout_gravity="center"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            tools:text="Entronque de Aguada de Pasajeros"/>
+                            android:ellipsize="end"
+                            tools:text="Entronque de Aguada de sfdsdf sdfsdf Pasajeros"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             app:srcCompat="@drawable/ic_flechas"
                             app:tint="@android:color/white"
@@ -109,7 +114,8 @@
                     <!--Edgar android:layout_width="140dp" android:maxLines="4"-->
                     <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/destiny"
-                            android:layout_width="150dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
                             android:layout_height="wrap_content"
                             app:fontFamily="@font/roboto_medium"
                             android:textSize="24sp"
@@ -119,6 +125,7 @@
                             android:layout_gravity="center"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
+                            android:ellipsize="end"
                             tools:text="Entronque de Aguada de Pasajeros" android:gravity="center"/>
 
                 </LinearLayout>
